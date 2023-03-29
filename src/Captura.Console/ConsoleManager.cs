@@ -72,11 +72,18 @@ namespace Captura
             _settings.Keystrokes = dummySettings.Keystrokes;
             _settings.Elapsed = dummySettings.Elapsed;
 
+            // add by Awesome Yuer
+            _settings.Audio.RecordMicrophone = dummySettings.Audio.RecordMicrophone;
+            _settings.Audio.RecordSpeaker = dummySettings.Audio.RecordSpeaker;
+
             // Output Folder
             _settings.OutPath = dummySettings.OutPath;
 
             // FFmpeg Path
             _settings.FFmpeg.FolderPath = dummySettings.FFmpeg.FolderPath;
+
+            // add by Awesome Yuer
+            // _settings = dummySettings;
 
             foreach (var overlay in dummySettings.Censored)
             {
@@ -209,24 +216,105 @@ namespace Captura
         {
             Microphone = Speaker = null;
 
-            var mics = _audioSource
-                .Microphones
-                .ToArray();
+            var microphones = _audioSource
+                                    .Microphones
+                                    .ToArray();
 
             var speakers = _audioSource
-                .Speakers
-                .ToArray();
+                                    .Speakers
+                                    .ToArray();
 
-            if (StartOptions.Microphone != -1 && StartOptions.Microphone < mics.Length)
+            if (microphones.Length > 0)
             {
-                _settings.Audio.RecordMicrophone = true;
-                Microphone = mics[StartOptions.Microphone];
+                if
+                    (
+                        StartOptions.Microphone > -1
+                        &&
+                        StartOptions.Microphone < microphones.Length
+                    )
+                {
+                    _settings.Audio.RecordMicrophone = true;
+                    Microphone = microphones[StartOptions.Microphone];
+                }
+                else if
+                    (
+                        _settings.Audio.RecordMicrophone
+                    )
+                {
+                    var microphone = _settings.Audio.Microphone;
+                    if
+                        (
+                            string.IsNullOrEmpty(_settings.Audio.Microphone)
+                            ||
+                            string.IsNullOrWhiteSpace(_settings.Audio.Microphone)
+                        )
+                    {
+                        microphone = "0";
+                    }
+                    if
+                        (
+                            int
+                                .TryParse
+                                        (
+                                            microphone
+                                            , out var settingsMicrophone
+                                        )
+                            &&
+                            settingsMicrophone < microphones.Length
+                            &&
+                            settingsMicrophone > -1
+                        )
+                    {
+                        Microphone = microphones[settingsMicrophone];
+                    }
+                }
             }
 
-            if (StartOptions.Speaker != -1 && StartOptions.Speaker < speakers.Length)
+
+            if (speakers.Length > 0)
             {
-                _settings.Audio.RecordSpeaker = true;
-                Speaker = speakers[StartOptions.Speaker];
+                if
+                    (
+                        StartOptions.Speaker > -1
+                        &&
+                        StartOptions.Speaker < speakers.Length
+                    )
+                {
+                    _settings.Audio.RecordSpeaker = true;
+                    Speaker = speakers[StartOptions.Speaker];
+                }
+                else if
+                    (
+                        _settings.Audio.RecordSpeaker
+                    )
+                {
+                    var speaker = _settings.Audio.Speaker;
+                    if
+                        (
+                            string.IsNullOrEmpty(_settings.Audio.Speaker)
+                            ||
+                            string.IsNullOrWhiteSpace(_settings.Audio.Speaker)
+                        )
+                    {
+                        speaker = "0";
+                    }
+                    if
+                        (
+                            int
+                                .TryParse
+                                        (
+                                            speaker
+                                            , out var settingsSpeaker
+                                        )
+                            &&
+                            settingsSpeaker < speakers.Length
+                            &&
+                            settingsSpeaker > -1
+                        )
+                    {
+                        Speaker = speakers[settingsSpeaker];
+                    }
+                }
             }
         }
 

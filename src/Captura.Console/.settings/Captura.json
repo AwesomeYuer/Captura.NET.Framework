@@ -1,5 +1,5 @@
 {
-  "OutPath": "\\temp\\",
+  "OutPath": ".\\temp\\",
   "AroundMouse": {
     "Width": 600,
     "Height": 400,
@@ -9,7 +9,7 @@
     "SeparateFilePerSource": false,
     "RecordMicrophone": true,
     "Microphone": "Default",
-    "RecordSpeaker": false,
+    "RecordSpeaker": true,
     "Speaker": "Default",
     "Quality": 80
   },

@@ -50,7 +50,14 @@ namespace Captura
                 JsonConvert.PopulateObject(json, this);
 
                 // add by Awesome Yuer for Support ".." "." etc.
-                OutPath = Path.GetFullPath(OutPath);
+                //OutPath = Path.GetFullPath(OutPath);
+
+                //Console.WriteLine(Audio.Microphone);
+                //Console.WriteLine(Audio.Speaker);
+                //Console.WriteLine(Audio.RecordSpeaker);
+                //Console.WriteLine(Audio.RecordMicrophone);
+                //Console.WriteLine(OutPath);
+
                 return true;
             }
             catch
