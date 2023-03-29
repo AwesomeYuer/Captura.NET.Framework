@@ -49,6 +49,8 @@ namespace Captura
 
                 JsonConvert.PopulateObject(json, this);
 
+                // add by Awesome Yuer for Support ".." "." etc.
+                OutPath = Path.GetFullPath(OutPath);
                 return true;
             }
             catch

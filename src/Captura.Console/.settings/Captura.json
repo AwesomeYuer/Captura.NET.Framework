@@ -1,0 +1,165 @@
+{
+  "OutPath": "\\temp\\",
+  "AroundMouse": {
+    "Width": 600,
+    "Height": 400,
+    "Margin": 30
+  },
+  "Audio": {
+    "SeparateFilePerSource": false,
+    "RecordMicrophone": true,
+    "Microphone": "Default",
+    "RecordSpeaker": false,
+    "Speaker": "Default",
+    "Quality": 80
+  },
+  "Censored": [],
+  "Clicks": {
+    "RightClickColor": "3, 169, 244",
+    "MiddleClickColor": "76, 175, 80",
+    "DisplayScroll": true,
+    "ScrollCircleColor": "239, 83, 80",
+    "ScrollArrowColor": "33, 33, 33",
+    "Display": false,
+    "Radius": 25,
+    "Color": "255, 235, 59",
+    "BorderThickness": 0,
+    "BorderColor": "Black"
+  },
+  "CopyOutPathToClipboard": false,
+  "Duration": 0,
+  "Elapsed": {
+    "Display": false,
+    "FontFamily": "Arial",
+    "FontSize": 50,
+    "FontColor": "White",
+    "BackgroundColor": "Teal",
+    "HorizontalPadding": 15,
+    "VerticalPadding": 15,
+    "CornerRadius": 30,
+    "BorderThickness": 0,
+    "BorderColor": "158, 158, 158",
+    "HorizontalAlignment": "Start",
+    "VerticalAlignment": "End",
+    "X": 80,
+    "Y": 100
+  },
+  "FFmpeg": {
+    "TwitchKey": "",
+    "YouTubeLiveKey": "",
+    "CustomCodecs": [],
+    "CustomStreamingUrl": "rtmp://",
+    "Resize": false,
+    "ResizeWidth": 640,
+    "ResizeHeight": 480,
+    "X264": {
+      "Preset": "ultrafast",
+      "PixelFormat": "yuv420p"
+    }
+  },
+  "FilenameFormat": "%yyyy%-%MM%-%dd%/%HH%-%mm%-%ss%",
+  "ImageOverlays": [],
+  "Imgur": {
+    "Anonymous": true,
+    "AccessToken": "",
+    "RefreshToken": "",
+    "ExpiresAt": "0001-01-01T00:00:00"
+  },
+  "IncludeCursor": true,
+  "Keystrokes": {
+    "MaxTextLength": 15,
+    "Timeout": 2,
+    "HistoryCount": 6,
+    "HistorySpacing": 10,
+    "ShowRepeatCounter": true,
+    "KeymapName": "en",
+    "SeparateTextFile": false,
+    "Display": false,
+    "FontFamily": "Arial",
+    "FontSize": 50,
+    "FontColor": "White",
+    "BackgroundColor": "Teal",
+    "HorizontalPadding": 15,
+    "VerticalPadding": 15,
+    "CornerRadius": 30,
+    "BorderThickness": 0,
+    "BorderColor": "158, 158, 158",
+    "HorizontalAlignment": "Start",
+    "VerticalAlignment": "End",
+    "X": 80,
+    "Y": 100
+  },
+  "MousePointerOverlay": {
+    "Display": false,
+    "Radius": 25,
+    "Color": "200, 239, 108, 0",
+    "BorderThickness": 0,
+    "BorderColor": "Black"
+  },
+  "PreStartCountdown": 0,
+  "Proxy": {
+    "Type": "System",
+    "Host": "",
+    "Port": 0,
+    "Authenticate": false,
+    "UserName": "",
+    "Password": ""
+  },
+  "RegionPickerHotkeyAutoStartRecording": true,
+  "ScreenShots": {
+    "ImageFormat": "Png",
+    "SaveTargets": [
+      "Disk"
+    ],
+    "WindowShotTransparent": true,
+    "ExternalEditor": "mspaint"
+  },
+  "Sounds": {
+    "Items": {}
+  },
+  "Steps": {
+    "Writer": "Video",
+    "IncludeScrolls": true
+  },
+  "TextOverlays": [],
+  "Tray": {
+    "LeftClickAction": "ShowMainWindow",
+    "ShowNotifications": true,
+    "MinToTrayOnStartup": false,
+    "MinToTrayOnClose": false,
+    "MinToTrayOnCaptureStart": false
+  },
+  "UI": {
+    "DarkTheme": false,
+    "MainWindowTopmost": false,
+    "MainWindowLeft": 50,
+    "MainWindowTop": 50,
+    "Expanded": true,
+    "HideOnFullScreenShot": true,
+    "Language": "en"
+  },
+  "Video": {
+    "WriterKind": "MF",
+    "Writer": "MF",
+    "PostConvert": false,
+    "PostWriter": "Captura.FFmpeg.FFmpegGifConverter",
+    "SourceKind": "Full Screen",
+    "Source": "",
+    "Webcam": "No Webcam",
+    "Quality": 70,
+    "FrameRate": 20,
+    "FpsLimit": true,
+    "RecorderMode": "Video",
+    "ReplayDuration": 20
+  },
+  "WebcamOverlay": {
+    "SeparateFile": false,
+    "Opacity": 100,
+    "Scale": 0.3,
+    "XLoc": 1.0,
+    "YLoc": 1.0
+  },
+  "WindowsSettings": {
+    "UseGdi": false
+  }
+}

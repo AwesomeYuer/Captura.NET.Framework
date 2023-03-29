@@ -1,0 +1,32 @@
+[
+  {
+    "IsActive": true,
+    "ServiceName": "Recording",
+    "Key": "F9",
+    "Modifiers": "Alt"
+  },
+  {
+    "IsActive": true,
+    "ServiceName": "Pause",
+    "Key": "F9",
+    "Modifiers": "Shift"
+  },
+  {
+    "IsActive": true,
+    "ServiceName": "ScreenShot",
+    "Key": "PrintScreen",
+    "Modifiers": "None"
+  },
+  {
+    "IsActive": true,
+    "ServiceName": "ActiveScreenShot",
+    "Key": "PrintScreen",
+    "Modifiers": "Alt"
+  },
+  {
+    "IsActive": true,
+    "ServiceName": "DesktopScreenShot",
+    "Key": "PrintScreen",
+    "Modifiers": "Shift"
+  }
+]
