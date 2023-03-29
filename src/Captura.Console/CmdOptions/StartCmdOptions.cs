@@ -54,6 +54,9 @@ namespace Captura
         [Option("settings", HelpText = "Settings file to use for overlay settings, ffmpeg path and output path")]
         public string Settings { get; set; }
 
+        [Option("out", HelpText = "Output directory path.")]
+        public string OutPath { get; set; }
+
         [Usage]
         public static IEnumerable<Example> Examples
         {

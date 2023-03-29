@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -76,7 +77,9 @@ namespace Captura
             _settings.Audio.RecordMicrophone = dummySettings.Audio.RecordMicrophone;
             _settings.Audio.RecordSpeaker = dummySettings.Audio.RecordSpeaker;
 
-            // Output Folder
+
+            
+
             _settings.OutPath = dummySettings.OutPath;
 
             // FFmpeg Path
@@ -101,25 +104,41 @@ namespace Captura
             }
         }
 
-        public void Start(StartCmdOptions StartOptions)
+        public void Start(StartCmdOptions startOptions)
         {
-            _settings.IncludeCursor = StartOptions.Cursor;
-            _settings.Clicks.Display = StartOptions.Clicks;
-            _settings.Keystrokes.Display = StartOptions.Keys;
+            _settings.IncludeCursor = startOptions.Cursor;
+            _settings.Clicks.Display = startOptions.Clicks;
+            _settings.Keystrokes.Display = startOptions.Keys;
 
-            if (File.Exists(StartOptions.FileName))
+            // Output Folder
+            // add by Awsesome Yuer
+            if
+                (
+                    !string.IsNullOrEmpty(startOptions.OutPath)
+                    &&
+                    !string.IsNullOrWhiteSpace(startOptions.OutPath)
+                )
             {
-                if (!StartOptions.Overwrite)
+                _settings.OutPath = startOptions.OutPath;
+            }
+            else
+            {
+                startOptions.OutPath = _settings.OutPath;
+            }
+            
+            if (File.Exists(startOptions.FileName))
+            {
+                if (!startOptions.Overwrite)
                 {
                     if (!_messageProvider
                         .ShowYesNo("Output File Already Exists, Do you want to overwrite?", ""))
                         return;
                 }
 
-                File.Delete(StartOptions.FileName);
+                File.Delete(startOptions.FileName);
             }
 
-            var videoSourceKind = HandleVideoSource(StartOptions);
+            var videoSourceKind = HandleVideoSource(startOptions);
 
             if (videoSourceKind == null)
             {
@@ -128,29 +147,29 @@ namespace Captura
                 return;
             }
 
-            HandleAudioSource(StartOptions, out var mic, out var speaker);
+            HandleAudioSource(startOptions, out var mic, out var speaker);
 
-            HandleWebcam(StartOptions);
+            HandleWebcam(startOptions);
 
-            if (StartOptions.FrameRate is int frameRate)
+            if (startOptions.FrameRate is int frameRate)
                 _settings.Video.FrameRate = frameRate;
 
-            if (StartOptions.AudioQuality is int aq)
+            if (startOptions.AudioQuality is int aq)
                 _settings.Audio.Quality = aq;
 
-            if (StartOptions.VideoQuality is int vq)
+            if (startOptions.VideoQuality is int vq)
                 _settings.Video.Quality = vq;
 
-            if (StartOptions.Replay is int replayDuration && replayDuration > 0)
+            if (startOptions.Replay is int replayDuration && replayDuration > 0)
             {
                 _settings.Video.RecorderMode = RecorderMode.Replay;
                 _settings.Video.ReplayDuration = replayDuration;
             }
 
-            var videoWriter = HandleVideoEncoder(StartOptions, out _);
+            var videoWriter = HandleVideoEncoder(startOptions, out _);
 
-            if (StartOptions.Delay > 0)
-                Thread.Sleep(StartOptions.Delay);
+            if (startOptions.Delay > 0)
+                Thread.Sleep(startOptions.Delay);
 
             if (!_recordingModel.StartRecording(new RecordingModelParams
             {
@@ -158,12 +177,12 @@ namespace Captura
                 VideoWriter = videoWriter,
                 Microphone = mic,
                 Speaker = speaker
-            }, StartOptions.FileName))
+            }, startOptions.FileName))
                 return;
 
             Task.Factory.StartNew(() =>
             {
-                Loop(StartOptions);
+                Loop(startOptions);
 
                 _recordingModel.StopRecording().Wait();
 
@@ -212,9 +231,14 @@ namespace Captura
             return provider;
         }
 
-        void HandleAudioSource(StartCmdOptions StartOptions, out IAudioItem Microphone, out IAudioItem Speaker)
+        void HandleAudioSource
+                            (
+                                  StartCmdOptions startOptions
+                                , out IAudioItem microphone
+                                , out IAudioItem speaker
+                            )
         {
-            Microphone = Speaker = null;
+            microphone = speaker = null;
 
             var microphones = _audioSource
                                     .Microphones
@@ -224,24 +248,26 @@ namespace Captura
                                     .Speakers
                                     .ToArray();
 
+            
+
             if (microphones.Length > 0)
             {
                 if
                     (
-                        StartOptions.Microphone > -1
+                        startOptions.Microphone > -1
                         &&
-                        StartOptions.Microphone < microphones.Length
+                        startOptions.Microphone < microphones.Length
                     )
                 {
                     _settings.Audio.RecordMicrophone = true;
-                    Microphone = microphones[StartOptions.Microphone];
+                    microphone = microphones[startOptions.Microphone];
                 }
                 else if
                     (
                         _settings.Audio.RecordMicrophone
                     )
                 {
-                    var microphone = _settings.Audio.Microphone;
+                    var microphoneId = _settings.Audio.Microphone;
                     if
                         (
                             string.IsNullOrEmpty(_settings.Audio.Microphone)
@@ -249,14 +275,14 @@ namespace Captura
                             string.IsNullOrWhiteSpace(_settings.Audio.Microphone)
                         )
                     {
-                        microphone = "0";
+                        microphoneId = "0";
                     }
                     if
                         (
                             int
                                 .TryParse
                                         (
-                                            microphone
+                                            microphoneId
                                             , out var settingsMicrophone
                                         )
                             &&
@@ -265,7 +291,8 @@ namespace Captura
                             settingsMicrophone > -1
                         )
                     {
-                        Microphone = microphones[settingsMicrophone];
+                        microphone = microphones[settingsMicrophone];
+                        startOptions.Microphone = settingsMicrophone;
                     }
                 }
             }
@@ -275,20 +302,20 @@ namespace Captura
             {
                 if
                     (
-                        StartOptions.Speaker > -1
+                        startOptions.Speaker > -1
                         &&
-                        StartOptions.Speaker < speakers.Length
+                        startOptions.Speaker < speakers.Length
                     )
                 {
                     _settings.Audio.RecordSpeaker = true;
-                    Speaker = speakers[StartOptions.Speaker];
+                    speaker = speakers[startOptions.Speaker];
                 }
                 else if
                     (
                         _settings.Audio.RecordSpeaker
                     )
                 {
-                    var speaker = _settings.Audio.Speaker;
+                    var speakerId = _settings.Audio.Speaker;
                     if
                         (
                             string.IsNullOrEmpty(_settings.Audio.Speaker)
@@ -296,14 +323,14 @@ namespace Captura
                             string.IsNullOrWhiteSpace(_settings.Audio.Speaker)
                         )
                     {
-                        speaker = "0";
+                        speakerId = "0";
                     }
                     if
                         (
                             int
                                 .TryParse
                                         (
-                                            speaker
+                                            speakerId
                                             , out var settingsSpeaker
                                         )
                             &&
@@ -312,7 +339,8 @@ namespace Captura
                             settingsSpeaker > -1
                         )
                     {
-                        Speaker = speakers[settingsSpeaker];
+                        speaker = speakers[settingsSpeaker];
+                        startOptions.Speaker = settingsSpeaker;
                     }
                 }
             }

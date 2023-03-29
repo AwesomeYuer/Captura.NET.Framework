@@ -1,3 +1,23 @@
+# Captura Console
+## This program can be used as a stealth screen recording program.
+```
+Captura.NET.Framework\src\Captura.Console
+```
+## Usage
+### Command Line
+```sh
+# 1
+captura-cli.exe start --settings .\.settings\
+
+# 2
+captura-cli.exe start --out d:\temp2\
+
+# 3 Must set OutPath @ "C:\Users\<UserName>\AppData\Roaming\Captura\Captura.json"
+captura-cli.exe start
+
+
+```
+
 ![Captura](https://mathewsachin.github.io/Captura/assets/Banner.png)
 
 [![Master Build Status](https://img.shields.io/appveyor/ci/MathewSachin/Captura/master.svg?style=flat-square&logo=appveyor)](https://ci.appveyor.com/project/MathewSachin/Captura)

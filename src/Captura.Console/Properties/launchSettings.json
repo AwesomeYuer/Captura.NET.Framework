@@ -2,7 +2,10 @@
   "profiles": {
     "Captura.Console": {
       "commandName": "Project",
-      "commandLineArgs": "start --settings .\\.settings\\"
+      "commandLineArgs111": "start --settings .\\.settings\\ --out d:\\temp2\\",
+      "commandLineArgs2222": "start --out d:\\temp2\\",
+      "commandLineArgs333": "start --settings .\\.settings\\",
+      "commandLineArgs": "start"
     }
   }
 }

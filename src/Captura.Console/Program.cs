@@ -25,14 +25,23 @@ namespace Captura
                 .Select(M => M.GetType())
                 .ToArray();
 
-            Parser.Default.ParseArguments(Args, verbTypes)
-                .WithParsed((ICmdlineVerb Verb) =>
-                {
-                    // Always display Banner
-                    Banner();
+            Parser
+                .Default
+                .ParseArguments
+                    (
+                        Args
+                        , verbTypes
+                    )
+                .WithParsed
+                    (
+                        (ICmdlineVerb Verb) =>
+                        {
+                            // Always display Banner
+                            Banner();
 
-                    Verb.Run();
-                });
+                            Verb.Run();
+                        }
+                    );
         }
 
         static void Banner()
